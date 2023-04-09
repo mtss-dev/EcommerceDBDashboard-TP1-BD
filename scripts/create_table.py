@@ -7,14 +7,14 @@ def create_tables():
     commands = (
         """
         CREATE SEQUENCE product_id_seq
-            START WITH 0
+            START WITH 1
             INCREMENT BY 1
-            MINVALUE 0
+            NO MINVALUE
             NO MAXVALUE
             CACHE 1;
         CREATE TABLE product (
-            id INTEGER DEFAULT NEXTVAL('product_id_seq') PRIMARY KEY,
-            asin varchar(10)  NOT NULL,
+             id INTEGER DEFAULT NEXTVAL('product_id_seq'),
+            asin varchar(10)  NOT NULL PRIMARY KEY,
             title varchar(255)  NOT NULL,
             product_group varchar(10)  NOT NULL,
             sales_rank int  NOT NULL
@@ -22,48 +22,46 @@ def create_tables():
         """,
         """ 
         CREATE TABLE review (
-            product_id int  NOT NULL,
+            asin_id varchar(10)  NOT NULL,
             costumer varchar(20)  NOT NULL,
             date date  NOT NULL,
             rate int  NOT NULL,
             vote int  NOT NULL,
             helpful int  NOT NULL,
-            CONSTRAINT review_pk PRIMARY KEY (product_id,costumer),
-            FOREIGN KEY (product_id)
-                REFERENCES product (id)
+            CONSTRAINT review_pk PRIMARY KEY (asin_id,costumer),
+            FOREIGN KEY (asin_id)
+                REFERENCES product (asin)
                 NOT DEFERRABLE 
                 INITIALLY IMMEDIATE
         )
         """,
         """
         CREATE TABLE similar_products (
-            product_id int  NOT NULL,
+            asin_id varchar(10)  NOT NULL,
             asin_similar varchar(10)  NOT NULL,
-            CONSTRAINT similar_products_pk PRIMARY KEY (product_id,asin_similar),
-            FOREIGN KEY (product_id)
-                REFERENCES product (id)  
-                NOT DEFERRABLE 
-                INITIALLY IMMEDIATE
-        )
-        """,
-        """
-        CREATE TABLE category (
-            product_id int  NOT NULL,
-            id int  NOT NULL,
-            CONSTRAINT category_pk PRIMARY KEY (id),
-            FOREIGN KEY (product_id)
-                REFERENCES product (id)  
+            CONSTRAINT similar_products_pk PRIMARY KEY (asin_id,asin_similar),
+            FOREIGN KEY (asin_id)
+                REFERENCES product (asin)  
                 NOT DEFERRABLE 
                 INITIALLY IMMEDIATE
         )
         """,
         """
         CREATE TABLE category_info (
+            category_id int  NOT NULL PRIMARY KEY,
+            name varchar(50)  NOT NULL
+        )
+        """,
+        """
+        CREATE TABLE category (
+            asin_id varchar(10)  NOT NULL,
             category_id int  NOT NULL,
-            name varchar(50)  NOT NULL,
-            CONSTRAINT category_info_pk PRIMARY KEY (category_id,name),
+            FOREIGN KEY (asin_id)
+                REFERENCES product (asin)  
+                NOT DEFERRABLE 
+                INITIALLY IMMEDIATE,
             FOREIGN KEY (category_id)
-                REFERENCES category (id)  
+                REFERENCES category_info (category_id)  
                 NOT DEFERRABLE 
                 INITIALLY IMMEDIATE
         )
