@@ -6,43 +6,66 @@ def create_tables():
     """ create tables in the PostgreSQL database"""
     commands = (
         """
-        CREATE SEQUENCE vendor_id_seq
+        CREATE SEQUENCE product_id_seq
             START WITH 0
             INCREMENT BY 1
             MINVALUE 0
             NO MAXVALUE
             CACHE 1;
-        CREATE TABLE vendors (
-            vendor_id INTEGER DEFAULT NEXTVAL('vendor_id_seq') PRIMARY KEY,
-            vendor_name VARCHAR(255) NOT NULL
+        CREATE TABLE product (
+            id INTEGER DEFAULT NEXTVAL('product_id_seq') PRIMARY KEY,
+            asin varchar(10)  NOT NULL,
+            title varchar(255)  NOT NULL,
+            product_group varchar(10)  NOT NULL,
+            sales_rank int  NOT NULL
         )
         """,
-        """ CREATE TABLE parts (
-                part_id SERIAL PRIMARY KEY,
-                part_name VARCHAR(255) NOT NULL
-                )
-        """,
-        """
-        CREATE TABLE part_drawings (
-                part_id INTEGER PRIMARY KEY,
-                file_extension VARCHAR(5) NOT NULL,
-                drawing_data BYTEA NOT NULL,
-                FOREIGN KEY (part_id)
-                REFERENCES parts (part_id)
-                ON UPDATE CASCADE ON DELETE CASCADE
+        """ 
+        CREATE TABLE review (
+            product_id int  NOT NULL,
+            costumer varchar(20)  NOT NULL,
+            date date  NOT NULL,
+            rate int  NOT NULL,
+            vote int  NOT NULL,
+            helpful int  NOT NULL,
+            CONSTRAINT review_pk PRIMARY KEY (product_id,costumer),
+            FOREIGN KEY (product_id)
+                REFERENCES product (id)
+                NOT DEFERRABLE 
+                INITIALLY IMMEDIATE
         )
         """,
         """
-        CREATE TABLE vendor_parts (
-                vendor_id INTEGER NOT NULL,
-                part_id INTEGER NOT NULL,
-                PRIMARY KEY (vendor_id , part_id),
-                FOREIGN KEY (vendor_id)
-                    REFERENCES vendors (vendor_id)
-                    ON UPDATE CASCADE ON DELETE CASCADE,
-                FOREIGN KEY (part_id)
-                    REFERENCES parts (part_id)
-                    ON UPDATE CASCADE ON DELETE CASCADE
+        CREATE TABLE similar_products (
+            product_id int  NOT NULL,
+            asin_similar varchar(10)  NOT NULL,
+            CONSTRAINT similar_products_pk PRIMARY KEY (product_id,asin_similar),
+            FOREIGN KEY (product_id)
+                REFERENCES product (id)  
+                NOT DEFERRABLE 
+                INITIALLY IMMEDIATE
+        )
+        """,
+        """
+        CREATE TABLE category (
+            product_id int  NOT NULL,
+            id int  NOT NULL,
+            CONSTRAINT category_pk PRIMARY KEY (id),
+            FOREIGN KEY (product_id)
+                REFERENCES product (id)  
+                NOT DEFERRABLE 
+                INITIALLY IMMEDIATE
+        )
+        """,
+        """
+        CREATE TABLE category_info (
+            category_id int  NOT NULL,
+            name varchar(50)  NOT NULL,
+            CONSTRAINT category_info_pk PRIMARY KEY (category_id,name),
+            FOREIGN KEY (category_id)
+                REFERENCES category (id)  
+                NOT DEFERRABLE 
+                INITIALLY IMMEDIATE
         )
         """)
     conn = None
