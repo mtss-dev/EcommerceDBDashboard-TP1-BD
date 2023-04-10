@@ -6,14 +6,7 @@ def create_tables():
     """ create tables in the PostgreSQL database"""
     commands = (
         """
-        CREATE SEQUENCE product_id_seq
-            START WITH 1
-            INCREMENT BY 1
-            NO MINVALUE
-            NO MAXVALUE
-            CACHE 1;
         CREATE TABLE product (
-             id INTEGER DEFAULT NEXTVAL('product_id_seq'),
             asin varchar(10)  NOT NULL PRIMARY KEY,
             title varchar(255)  NOT NULL,
             product_group varchar(10)  NOT NULL,

@@ -5,7 +5,7 @@ from config import config
 #A função abaixo insere dados na tabela product e similar_products
 def add_product(asin,title,product_group,sales_rank, assins_list):
     # statement for inserting a new row into the parts table
-    insert_product = "INSERT INTO product(asin,title,product_group,sales_rank, id) VALUES(%s,%s,%s,%s, DEFAULT) RETURNING asin;"
+    insert_product = "INSERT INTO product(asin,title,product_group,sales_rank) VALUES(%s,%s,%s,%s) RETURNING asin;"
     # statement for inserting a new row into the vendor_parts table
     assing_similar = "INSERT INTO similar_products(asin_similar,asin_id) VALUES(%s,%s)"
 
@@ -16,7 +16,7 @@ def add_product(asin,title,product_group,sales_rank, assins_list):
         conn.autocommit = False  # desabilita o modo de commit automático
         cur = conn.cursor()
         cur.execute("BEGIN")  # inicia a transação
-        cur.execute(insert_product, (asin,title,product_group,sales_rank,))
+        cur.execute(insert_product, (asin,title,product_group,sales_rank))
         row = cur.fetchone()
         if row is not None:
             aid = row[0]
@@ -33,6 +33,7 @@ def add_product(asin,title,product_group,sales_rank, assins_list):
         if conn is not None:
             conn.close()
 
+#SELECT asin_similar FROM similar_products WHERE asin_id = '0827229525';
 
 if __name__ == '__main__':
     #insert_product_list([
