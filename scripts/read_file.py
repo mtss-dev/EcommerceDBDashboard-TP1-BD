@@ -1,4 +1,3 @@
-
 def populate():
 
     file = open('teste.txt', 'r')
