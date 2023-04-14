@@ -7,7 +7,7 @@ def create_tables():
     commands = (
         """
         CREATE TABLE product (
-            asin varchar(10)  NOT NULL PRIMARY KEY,
+            asin varchar(15)  NOT NULL PRIMARY KEY,
             title varchar(255)  NOT NULL,
             product_group varchar(10)  NOT NULL,
             sales_rank int  NOT NULL
@@ -15,26 +15,28 @@ def create_tables():
         """,
         """ 
         CREATE TABLE review (
-            asin_id varchar(10)  NOT NULL,
+            asin_product varchar(15)  NOT NULL,
             costumer varchar(20)  NOT NULL,
             date date  NOT NULL,
             rate int  NOT NULL,
             vote int  NOT NULL,
             helpful int  NOT NULL,
-            CONSTRAINT review_pk PRIMARY KEY (asin_id,costumer),
-            FOREIGN KEY (asin_id)
+            CONSTRAINT review_pk PRIMARY KEY (asin_product,costumer),
+            FOREIGN KEY (asin_product)
                 REFERENCES product (asin)
+                ON DELETE CASCADE
                 NOT DEFERRABLE 
                 INITIALLY IMMEDIATE
         )
         """,
         """
         CREATE TABLE similar_products (
-            asin_id varchar(10)  NOT NULL,
-            asin_similar varchar(10)  NOT NULL,
-            CONSTRAINT similar_products_pk PRIMARY KEY (asin_id,asin_similar),
-            FOREIGN KEY (asin_id)
+            asin_product  varchar(15)  NOT NULL,
+            asin_similar varchar(15),
+            CONSTRAINT similar_products_pk PRIMARY KEY (asin_product ,asin_similar),
+            FOREIGN KEY (asin_product )
                 REFERENCES product (asin)  
+                ON DELETE CASCADE
                 NOT DEFERRABLE 
                 INITIALLY IMMEDIATE
         )
@@ -42,19 +44,22 @@ def create_tables():
         """
         CREATE TABLE category_info (
             category_id int  NOT NULL PRIMARY KEY,
-            name varchar(50)  NOT NULL
+            name varchar(50)  NOT NULL UNIQUE
         )
         """,
         """
         CREATE TABLE category (
-            asin_id varchar(10)  NOT NULL,
+            asin_product  varchar(15)  NOT NULL,
             category_id int  NOT NULL,
-            FOREIGN KEY (asin_id)
+            CONSTRAINT category_pk PRIMARY KEY (asin_product ,category_id),
+            FOREIGN KEY (asin_product)
                 REFERENCES product (asin)  
+                ON DELETE CASCADE
                 NOT DEFERRABLE 
                 INITIALLY IMMEDIATE,
             FOREIGN KEY (category_id)
                 REFERENCES category_info (category_id)  
+                ON DELETE CASCADE
                 NOT DEFERRABLE 
                 INITIALLY IMMEDIATE
         )
