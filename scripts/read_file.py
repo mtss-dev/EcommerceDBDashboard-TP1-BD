@@ -18,3 +18,12 @@ def read_salesrank(line):
         salesrank = line.split("salesrank: ")[1]
     return salesrank
 
+def build_product(file):
+    while True:
+        line = file.readline()
+        asin = read_asin(file.readline())
+
+
+if __name__ == '__main__':
+    file = open("teste.txt", "r")
+    print(build_product(file))
