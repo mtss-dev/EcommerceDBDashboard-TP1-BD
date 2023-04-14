@@ -122,6 +122,18 @@ psql -h 172.22.70.191 -U postgres
 
 No comando psql -h 172.22.70.191 -U postgres, estamos tentando se conectar ao servidor que está localizado no endereço IP 172.22.70.191 (o endereço IP do seu WSL2 pode ser diferente, se for, substitua pelo seu) com o usuário postgres.
 
+Ou excecute tudo isso em apenas uma linha no terminal:
+
+```sh
+psql -h $(ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}') -U postgres
+```
+
+Se você usa Linux, basta digitar:
+
+```sh
+psql -h 172.22.70.191 -U postgres
+```
+
 Para listar todos os banco de dados criados:
 
 ```sh
