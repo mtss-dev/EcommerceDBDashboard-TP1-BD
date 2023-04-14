@@ -1,7 +1,9 @@
+from insert import *
+
 def populate():
 
     file = open('teste.txt', 'r')
-
+    categories = []
     for line in file:
         if 'discontinued' in line:
             asin = title = group = salesrank = ''
@@ -18,8 +20,10 @@ def populate():
         if 'salesrank' in line:
             salesrank = line.split("salesrank: ")[1]
             continue
+        if 'similar' in line:
+            similar = line.split()[2:]
         if 'categories' in line:
-            print(asin, title, group, salesrank)
+            add_product(asin, title, group, salesrank,[])
             continue
 
 if __name__ == '__main__':
