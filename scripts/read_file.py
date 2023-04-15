@@ -25,7 +25,17 @@ def populate():
             similar = line.split()[2:]
             for i in range(len(similar)):
                 similar[i] = similar[i].strip()
+        if 'categories' in line:
+            categories = []
+            n_cat = int(line.split()[1])
+            for i in range(n_cat):
+                line = file.readline()
+                result = (re.findall(r"\|(\w+)\[(\d+)\]", line))
+                categories.append(result)
+            print(categories)
+            break
 
+            
         if 'review' in line:
             reviews = []
             n_review = int(line.split(' ')[4].strip())
@@ -33,8 +43,7 @@ def populate():
                 line = file.readline()
                 result = [x.strip() for x in re.split(r"\s+|cutomer: |rating: |votes: |helpful:|\*|\n", line) if x.strip()]
                 reviews.append(result)
-
-            add_product(asin,title,group,salesrank,similar,reviews)                
+            add_product(asin,title,group,salesrank,similar,reviews)                        
 
 
 if __name__ == '__main__':
