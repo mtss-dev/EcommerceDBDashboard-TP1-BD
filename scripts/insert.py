@@ -1,5 +1,6 @@
 import psycopg2
 from config import config
+import traceback
 
 #A função abaixo insere dados na tabela product e similar_products
 def add_product(asin,title,product_group,sales_rank, assins_list,review_list,categories_list):
@@ -29,13 +30,12 @@ def add_product(asin,title,product_group,sales_rank, assins_list,review_list,cat
             if len(assins_list) >= 1:
                 for asin_similar in assins_list:
                     cur.execute(insert_assin_similars, (asin_similar, asin_product))
-            if len(review_list) >= 1:
-                for review in review_list:
-                    cur.execute(insert_product_review, (asin_product,review[0],review[1],review[2],review[3],review[4]))
+            # if len(review_list) >= 1:
+            #     for review in review_list:
+            #         if len(review) == 5:
+            #             cur.execute(insert_product_review, (asin_product,review[0],review[1],review[2],review[3],review[4]))
             if len(categories_list) >= 1:
                 for categorie in categories_list:
-                    print(categorie[0])
-                    print(categorie[1])
                     cur.execute(insert_category_info, (categorie[1], categorie[0]))
                     cur.execute(insert_category,(asin_product,categorie[1]))
             conn.commit()

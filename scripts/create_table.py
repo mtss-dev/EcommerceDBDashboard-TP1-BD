@@ -8,7 +8,7 @@ def create_tables():
         """
         CREATE TABLE product (
             asin varchar(15)  NOT NULL PRIMARY KEY,
-            title varchar(255)  NOT NULL,
+            title varchar(500)  NOT NULL,
             product_group varchar(10)  NOT NULL,
             sales_rank int  NOT NULL
         )
