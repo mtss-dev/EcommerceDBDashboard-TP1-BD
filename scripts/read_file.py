@@ -1,4 +1,5 @@
 from insert import *
+import re
 
 def populate():
 
@@ -24,9 +25,17 @@ def populate():
             similar = line.split()[2:]
             for i in range(len(similar)):
                 similar[i] = similar[i].strip()
-        if 'categories' in line:
-            add_product(asin, title, group, salesrank,similar)
-            continue
+
+        if 'review' in line:
+            reviews = []
+            n_review = int(line.split(' ')[4].strip())
+            for i in range(n_review):
+                line = file.readline()
+                result = [x.strip() for x in re.split(r"\s+|cutomer: |rating: |votes: |helpful:|\*|\n", line) if x.strip()]
+                reviews.append(result)
+
+            # inserir add_product, add review aqui                
+
 
 if __name__ == '__main__':
     file = open("teste.txt", "r")
