@@ -13,15 +13,22 @@ def create_tables():
             sales_rank int  NOT NULL
         )
         """,
-        """ 
+        """
+        CREATE SEQUENCE review_id_seq
+            START WITH 0
+            INCREMENT BY 1
+            MINVALUE 0
+            NO MAXVALUE
+            CACHE 1;
         CREATE TABLE review (
+            id INTEGER DEFAULT NEXTVAL('review_id_seq'),
             asin_product varchar(15)  NOT NULL,
             costumer varchar(20)  NOT NULL,
             date date  NOT NULL,
             rate int  NOT NULL,
             vote int  NOT NULL,
             helpful int  NOT NULL,
-            CONSTRAINT review_pk PRIMARY KEY (asin_product,costumer),
+            CONSTRAINT review_pk PRIMARY KEY (id,asin_product,costumer),
             FOREIGN KEY (asin_product)
                 REFERENCES product (asin)
                 ON DELETE CASCADE

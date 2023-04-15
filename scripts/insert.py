@@ -25,7 +25,6 @@ def add_product(asin,title,product_group,sales_rank, assins_list,review_list):
                 for asin_similar in assins_list:
                     cur.execute(insert_assin_similars, (asin_similar, asin_product))
             if len(review_list) >= 1:
-                print(review_list)
                 for review in review_list:
                     cur.execute(insert_product_review, (asin_product,review[0],review[1],review[2],review[3],review[4]))
             conn.commit()
