@@ -34,8 +34,10 @@ def add_product(asin,title,product_group,sales_rank, assins_list,review_list,cat
                     cur.execute(insert_product_review, (asin_product,review[0],review[1],review[2],review[3],review[4]))
             if len(categories_list) >= 1:
                 for categorie in categories_list:
-                    cur.execute(insert_category_info, (categorie[0], categorie[1]))
-                    cur.execute(insert_category,(asin_product,categorie[0]))
+                    print(categorie[0])
+                    print(categorie[1])
+                    cur.execute(insert_category_info, (categorie[1], categorie[0]))
+                    cur.execute(insert_category,(asin_product,categorie[1]))
             conn.commit()
         else:
             print("Insertion failed")
