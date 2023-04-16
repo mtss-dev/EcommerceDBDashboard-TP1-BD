@@ -1,4 +1,4 @@
-from insert2 import *
+from insert import *
 import re
 
 def line_generator(file, n_cat):
@@ -10,7 +10,7 @@ def line_generator(file, n_cat):
 
 def populate():
     try:
-        with open('teste.txt', 'r') as file:
+        with open('amazon-meta.txt', 'r') as file:
             products = []
             product = {}
             for line in file:
@@ -46,9 +46,19 @@ def populate():
                     # Criar a lista de lista com o nome e id extraídos
                     results = [[item[0], item[1]] for sublist in categories for item in sublist]
                     product['categories'] = results
+                
+                if "reviews" in line:
+                    aux = []
+                    reviews = re.findall(r'(\d{4}-\d{1,2}-\d{1,2})\s+cutomer:\s+(\w+)\s+rating:\s+(\d+)\s+votes:\s+(\d+)\s+helpful:\s+(\d+)', file.readline())
+                    while reviews:
+                        aux.append(reviews)
+                        reviews = re.findall(r'(\d{4}-\d{1,2}-\d{1,2})\s+cutomer:\s+(\w+)\s+rating:\s+(\d+)\s+votes:\s+(\d+)\s+helpful:\s+(\d+)', file.readline())
+                    if len(aux) > 0:
+                        product['reviews'] = aux
                     products.append(product)
                     product = {}
-                    
+
+            print("Leitura Finalizada")
             return products
             
     except FileNotFoundError as e:
