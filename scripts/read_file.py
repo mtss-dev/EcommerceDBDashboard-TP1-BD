@@ -8,7 +8,7 @@ def line_generator(file, n_cat):
             break
         yield line
 
-def populate(filename):
+def data_extraction(filename):
     try:
         with open(filename, 'r') as file:
             products = []
