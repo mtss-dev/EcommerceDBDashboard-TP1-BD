@@ -133,5 +133,6 @@ postgres-data/
 .tp1/
 amazon-meta.txt
 .vscode/
+teste.txt
 
 #database.ini
