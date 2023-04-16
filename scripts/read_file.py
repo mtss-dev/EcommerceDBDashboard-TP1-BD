@@ -8,9 +8,9 @@ def line_generator(file, n_cat):
             break
         yield line
 
-def populate():
+def populate(filename):
     try:
-        with open('amazon-meta.txt', 'r') as file:
+        with open(filename, 'r') as file:
             products = []
             product = {}
             for line in file:
@@ -58,18 +58,14 @@ def populate():
                     products.append(product)
                     product = {}
 
-            print("Leitura do arquivo finalizada com sucesso!")
+            print("Reading of the file finished successfully!")
             return products
             
     except FileNotFoundError as e:
-        print(f"O arquivo não foi encontrado: {e}")
+        print(f"The file was not found: {e}")
     except ValueError as e:
-        print(f"O valor é inválido: {e}")
+        print(f"The value is invalid: {e}")
     except IndexError as e:
-        print(f"Ocorreu um erro de índice: {e}")
+        print(f"An index error has occurred: {e}")
     except Exception as e:
-        print(f"Ocorreu um erro: {e}")
-
-if __name__ == '__main__':
-    products = populate()
-    add_products(products)
+        print(f"An error has occurred: {e}")

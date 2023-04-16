@@ -27,9 +27,7 @@ def add_products(product_dicts):
         # insert products
         products = [(product_dict['asin'], product_dict['title'], product_dict['product_group'], product_dict['sales_rank']) for product_dict in product_dicts if len(product_dict) > 1]
         execute_values(cur, insert_product, products, page_size=10000)
-        print("Todos os produtos inseridos")
 
-        
         # fetch all products
         cur.execute("SELECT asin FROM product")
         product_rows = cur.fetchall()
@@ -63,6 +61,7 @@ def add_products(product_dicts):
                         execute_values(cur, insert_product_review, rev, page_size=1000)
         # commit
         conn.commit()
+        print("Population in the 'amazon' database successfully finished!")
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
         conn.rollback()  # rollback in case of error

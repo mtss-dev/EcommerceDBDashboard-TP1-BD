@@ -88,4 +88,5 @@ def create_tables():
         print(error)
     finally:
         if conn is not None:
+            print("'amazon' database tables created successfully!")
             conn.close()

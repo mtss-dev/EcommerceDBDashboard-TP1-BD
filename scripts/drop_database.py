@@ -3,7 +3,7 @@ import subprocess
 
 ip_address = subprocess.check_output("ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'", shell=True).decode().strip()
 
-def create_db():
+def drop_db():
     conn = None
     try:
         # connect to the PostgreSQL server without specifying the database name
@@ -13,18 +13,13 @@ def create_db():
         # create a cursor object to execute commands
         cur = conn.cursor()
 
-        # check if database 'amazon' exists
-        cur.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'amazon'")
-
-        if not cur.fetchone():
-            # create database 'amazon' if it does not exist
-            cur.execute("CREATE DATABASE amazon")
+        cur.execute("DROP DATABASE amazon")
 
         # close cursor and connection
         cur.close()
         conn.close()
 
-        print("'amazon' database created successfully!")
+        print("'amazon' database successfully deleted!")
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
