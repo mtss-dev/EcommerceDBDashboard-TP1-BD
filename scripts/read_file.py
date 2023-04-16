@@ -43,7 +43,7 @@ def populate():
                         result = re.findall(r"\|(\w+)\[(\d+)\]", cat_line)
                         categories.append(result)
 
-                    # Criar a lista de lista com o nome e id extraídos
+                    # Create list list with extracted name and id
                     results = [[item[0], item[1]] for sublist in categories for item in sublist]
                     product['categories'] = results
                 
@@ -58,7 +58,7 @@ def populate():
                     products.append(product)
                     product = {}
 
-            print("Leitura Finalizada")
+            print("Leitura do arquivo finalizada com sucesso!")
             return products
             
     except FileNotFoundError as e:

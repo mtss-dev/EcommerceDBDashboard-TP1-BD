@@ -1,7 +1,6 @@
 import psycopg2
 from config import config
 
-
 def create_tables():
     """ create tables in the PostgreSQL database"""
     commands = (
@@ -90,7 +89,3 @@ def create_tables():
     finally:
         if conn is not None:
             conn.close()
-
-
-if __name__ == '__main__':
-    create_tables()
