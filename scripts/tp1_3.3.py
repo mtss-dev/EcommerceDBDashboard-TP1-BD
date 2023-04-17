@@ -33,22 +33,32 @@ def options(selected):
 
     if selected == 'a':
         os.system('cls' if os.name == 'nt' else 'clear')
-        entry = input('Insira o ASIN de um produto: ')
-
         while True:
+            entry = input('Insira o ASIN de um produto (r para retornar): ')
+            
+            if confirm_return(entry):
+                return False, False
+            
             if check_product_exists(entry):
                 top_reviews(entry)
                 break
             else:
                 print("Produto não encontrado!")
-                entry = input('Insira o ASIN de um produto: ')
-
-        input("Press Enter para continuar...")
-        return False, False
     
     elif selected == 'b':
         os.system('cls' if os.name == 'nt' else 'clear')
-        entry = input('Insira o ASIN de um produto: ')
+        while True:
+            entry = input('Insira o ASIN de um produto (r para retornar): ')
+            
+            if confirm_return(entry):
+                return False, False
+            
+            if get_similar_product(entry):
+                top_reviews(entry)
+                break
+            else:
+                print("Produto não encontrado!")
+
         input("Press Enter para continuar...")
         return False, False
     elif selected == 'c':
@@ -57,11 +67,15 @@ def options(selected):
         #insira a função aqui
         input("Press Enter para continuar...")
         return False, False
+    
     elif selected == 'd':
         os.system('cls' if os.name == 'nt' else 'clear')
-        #insira a função aqui
+
+        top_10_sold_for_group()
+
         input("Press Enter para continuar...")
         return False, False
+    
     elif selected == 'e':
         os.system('cls' if os.name == 'nt' else 'clear')
         #insira a função aqui
@@ -85,6 +99,9 @@ def options(selected):
     else:
         return False, True
 
+def confirm_return(entry): 
+    if entry == 'r':
+        return True
 
 if __name__ == '__main__':
     interface()
