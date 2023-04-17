@@ -88,22 +88,27 @@ def options(selected):
     
     elif selected == 'e':
         os.system('cls' if os.name == 'nt' else 'clear')
+
         #insira a função aqui
+
         input("Press Enter para continuar...")
         return False, False
     elif selected == 'f':
         os.system('cls' if os.name == 'nt' else 'clear')
+
         #insira a função aqui
+
         input("Press Enter para continuar...")
         return False, False
     elif selected == 'g':
         os.system('cls' if os.name == 'nt' else 'clear')
+
         #insira a função aqui
+
         input("Press Enter para continuar...")
         return False, False
     elif selected == 'q':
         os.system('cls' if os.name == 'nt' else 'clear')
-        #insira a função aqui
         print('volte sempre! :D')
         return True, False
     else:
