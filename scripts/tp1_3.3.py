@@ -38,7 +38,7 @@ def options(selected):
             
             if confirm_return(entry):
                 return False, False
-
+            
             if check_product_exists(entry):
                 top_reviews(entry)
                 input("Press Enter para continuar...")
