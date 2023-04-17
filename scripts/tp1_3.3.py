@@ -1,4 +1,5 @@
 import os
+from sql_queries import *
 
 def interface():
 
@@ -33,8 +34,18 @@ def options(selected):
     if selected == 'a':
         os.system('cls' if os.name == 'nt' else 'clear')
         entry = input('Insira o ASIN de um produto: ')
+
+        while True:
+            if check_product_exists(entry):
+                top_reviews(entry)
+                break
+            else:
+                print("Produto não encontrado!")
+                entry = input('Insira o ASIN de um produto: ')
+
         input("Press Enter para continuar...")
         return False, False
+    
     elif selected == 'b':
         os.system('cls' if os.name == 'nt' else 'clear')
         entry = input('Insira o ASIN de um produto: ')
