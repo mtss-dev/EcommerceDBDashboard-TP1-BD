@@ -2,13 +2,13 @@ import psycopg2
 import subprocess
 
 #If you are using WSL2, replace host='localhost' with host=ip_address in line 11, because WSL2 uses one IP for it!
-ip_address = subprocess.check_output("ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'", shell=True).decode().strip()
+#ip_address = subprocess.check_output("ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'", shell=True).decode().strip()
 
 def create_db():
     conn = None
     try:
         # connect to the PostgreSQL server without specifying the database name
-        conn = psycopg2.connect(dbname='postgres', user='postgres', password='postgres', host=ip_address)
+        conn = psycopg2.connect(dbname='postgres', user='postgres', password='postgres', host='localhost')
         conn.autocommit = True  
 
         # create a cursor object to execute commands
