@@ -10,68 +10,67 @@ def check_product_exists(asin):
     cursor.close()
     return exists
 
+#Letra A
 def top_reviews(asin):
-    if(check_product_exists(asin)):
-        params = config()
-        conn = psycopg2.connect(**params)
-        cur = conn.cursor()
+    params = config()
+    conn = psycopg2.connect(**params)
+    cur = conn.cursor()
 
-        # 5 comentários mais úteis e com maior avaliação
-        sql_query1 = f"""
-            SELECT * FROM (
-                SELECT ROW_NUMBER() OVER (ORDER BY rate DESC, helpful DESC) AS top,
-                    costumer, date, rate, vote, helpful
-                FROM review
-                WHERE asin_product = '{asin}'
-            ) AS top_reviews
-            WHERE top <= 5
-        """
+    # 5 comentários mais úteis e com maior avaliação
+    sql_query1 = f"""
+        SELECT * FROM (
+            SELECT ROW_NUMBER() OVER (ORDER BY rate DESC, helpful DESC) AS top,
+                costumer, date, rate, vote, helpful
+            FROM review
+            WHERE asin_product = '{asin}'
+        ) AS top_reviews
+        WHERE top <= 5
+    """
 
-        # 5 comentários mais úteis e com menor avaliação
-        sql_query2 = f"""
-            SELECT * FROM (
-                SELECT ROW_NUMBER() OVER (ORDER BY rate ASC, helpful DESC) AS top,
-                    costumer, date, rate, vote, helpful
-                FROM review
-                WHERE asin_product = '{asin}'
-            ) AS top_reviews
-            WHERE top <= 5
-        """
+    # 5 comentários mais úteis e com menor avaliação
+    sql_query2 = f"""
+        SELECT * FROM (
+            SELECT ROW_NUMBER() OVER (ORDER BY rate ASC, helpful DESC) AS top,
+                costumer, date, rate, vote, helpful
+            FROM review
+            WHERE asin_product = '{asin}'
+        ) AS top_reviews
+        WHERE top <= 5
+    """
 
-        try:
-            # Execução da consulta SQL
-            print("-------------------------------------------------")
-            print("Estes são os 5 comentários mais úteis e com maior avaliação, onde cada linha segue o formato:")
-            print("(top,customer,date,rate,votes,helpful)\n")
-            cur.execute(sql_query1)
-            rows = cur.fetchall()
+    try:
+        # Execução da consulta SQL
+        print("-------------------------------------------------")
+        print("Estes são os 5 comentários mais úteis e com maior avaliação, onde cada linha segue o formato:")
+        print("(top,customer,date,rate,votes,helpful)\n")
+        cur.execute(sql_query1)
+        rows = cur.fetchall()
 
-            # Exibição dos resultados
-            for row in rows:
-                print(row)
+        # Exibição dos resultados
+        for row in rows:
+            print(row)
 
-            print("-------------------------------------------------")
+        print("-------------------------------------------------")
 
-            print("Estes são os 5 comentários mais úteis e com menor avaliação, onde cada linha segue o formato:")
-            print("(top,customer,date,rate,votes,helpful)\n")
-            # Execução da consulta SQL
-            cur.execute(sql_query2)
-            rows = cur.fetchall()
-            # Exibição dos resultados
-            for row in rows:
-                print(row)
+        print("Estes são os 5 comentários mais úteis e com menor avaliação, onde cada linha segue o formato:")
+        print("(top,customer,date,rate,votes,helpful)\n")
+        # Execução da consulta SQL
+        cur.execute(sql_query2)
+        rows = cur.fetchall()
+        # Exibição dos resultados
+        for row in rows:
+            print(row)
 
-            print("-------------------------------------------------")
+        print("-------------------------------------------------")
 
-        except Exception as e:
-            print(f"Ocorreu um erro ao executar a consulta SQL: {e}")
-        finally:
-            cur.close()
-            conn.close()
-    else:
-        print("Produto não encontrado!")
-    
-def top_10_vendidos_por_grupo():
+    except Exception as e:
+        print(f"Ocorreu um erro ao executar a consulta SQL: {e}")
+    finally:
+        cur.close()
+        conn.close()
+
+#Letra D
+def top_10_sold_for_group():
 
     params = config()
     conn = psycopg2.connect(**params)
@@ -103,4 +102,4 @@ def top_10_vendidos_por_grupo():
 
 if __name__ == '__main__':
     #top_10_vendidos_por_grupo()
-    top_reviews('1234565767')
+    #top_reviews('1234565767')
