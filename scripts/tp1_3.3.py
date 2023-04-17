@@ -44,7 +44,9 @@ def options(selected):
                 break
             else:
                 print("Produto não encontrado!")
-    
+        input("Press Enter para continuar...")
+        return False, False
+
     elif selected == 'b':
         os.system('cls' if os.name == 'nt' else 'clear')
         while True:
@@ -58,13 +60,22 @@ def options(selected):
                 break
             else:
                 print("Produto não encontrado!")
-
         input("Press Enter para continuar...")
         return False, False
+    
     elif selected == 'c':
         os.system('cls' if os.name == 'nt' else 'clear')
-        entry = input('Insira o ASIN de um produto: ')
-        #insira a função aqui
+        while True:
+            entry = input('Insira o ASIN de um produto (r para retornar): ')
+            
+            if confirm_return(entry):
+                return False, False
+            
+            if get_similar_product(entry):
+                top_reviews(entry)
+                break
+            else:
+                print("Produto não encontrado!")
         input("Press Enter para continuar...")
         return False, False
     
