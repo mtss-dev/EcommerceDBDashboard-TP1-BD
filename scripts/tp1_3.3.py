@@ -2,114 +2,109 @@ import os
 from sql_queries import *
 
 def interface():
-
     quited = invalid = False
     while (not quited):
-        print('------------------------Bem vindo ao Dashboard---------------------')
-        print('selecione uma opção(q para sair): \n')
-        print(""" a) Dado um produto:
-        Listar os 5 comentários mais úteis e com maior avaliação
-        Listar os 5 5 comentários mais úteis e com menor avaliação\n""")
-        print(""" b) Dado um produto:
-        Listar os produtos similares com maiores vendas do que ele\n""")
-        print(""" c) Dado um produto: 
-        Mostrar a evolução diária das médias de avaliação ao longo
-        do intervalo de tempo coberto no arquivo de entrada\n""")
-        print(""" d) Listar os 10 produtos líderes de venda em cada grupo de
-    produtos\n""")
-        print(""" e) Listar os 10 produtos com a maior média de  avaliações úteis
-    positivas por produto\n""")
-        print(""" f) Listar a 5 categorias de produto com a maior média de
-    avaliações úteis positivas por produto\n""")
-        print(""" g) Listar os 10 clientes que mais fizeram comentários por
-    grupo de produto\n""")
+        print('------------------------Welcome to the Dashboard---------------------')
+        print('select an option(q to quit): \n')
+        print(""" a) Given a product:
+        List the 5 most useful and highest rated reviews
+        List the 5 most useful and lowest rated reviews\n""")
+        print(""" b) Given a product:
+        List the products that are similar and have higher sales than it\n""")
+        print(""" c) Given a product:
+        Show the daily evolution of the rating averages
+        over the desired time interval\n""")
+        print(""" d) List the 10 best selling products in each product group\n""")
+        print(""" e) List the 10 products with the highest average of positive
+    useful reviews per product\n""")
+        print(""" f) List the top 5 product categories with the highest average of positive
+    useful reviews per product\n""")
+        print(""" g) List the top 10 customers who made the most comments per
+    product group\n""")
         if invalid:
-            print('Comando inválido!')
+            print('Invalid command!')
         quited, invalid = options(input())
         os.system('cls' if os.name == 'nt' else 'clear')
 
-
 def options(selected):
-
     if selected == 'a':
         os.system('cls' if os.name == 'nt' else 'clear')
         while True:
-            entry = input('Insira o ASIN de um produto (r para retornar): ')
+            entry = input('Insert the ASIN of a product (r to return): ')
             
             if confirm_return(entry):
                 return False, False
             
             if check_product_exists(entry):
                 top_reviews(entry)
-                input("Press Enter para continuar...")
+                input("Press Enter to continue...")
                 os.system('cls' if os.name == 'nt' else 'clear')
             else:
-                print("Produto não encontrado!")
+                print("Product not found!")
 
     elif selected == 'b':
         os.system('cls' if os.name == 'nt' else 'clear')
         while True:
-            entry = input('Insira o ASIN de um produto (r para retornar): ')
+            entry = input('Insert the ASIN of a product (r to return): ')
         
-            
             if confirm_return(entry):
                 return False, False
             
             if check_product_exists(entry):
                 get_similar_products(entry)
-                input("Press Enter para continuar...")
+                input("Press Enter to continue...")
                 os.system('cls' if os.name == 'nt' else 'clear')
             else:
-                print("Produto não encontrado!")
-    
+                print("Product not found!")
+
     elif selected == 'c':
         os.system('cls' if os.name == 'nt' else 'clear')
         while True:
-            entry = input('Insira o ASIN de um produto (r para retornar): ')
+            entry = input('Insert the ASIN of a product (r to return): ')
             if confirm_return(entry):
                 return False, False
 
-            n = int(input('Insira a quantidade de dias que deseja analisar: '))
+            n = int(input('Insert the number of days you want to analyze: '))
             
             if check_product_exists(entry):
                 get_avg_rating_by_day(entry,n)
-                input("Press Enter para continuar...")
+                input("Press Enter to continue...")
                 os.system('cls' if os.name == 'nt' else 'clear')
             else:
-                print("Produto não encontrado!")
-    
+                print("Product not found!")
+
     elif selected == 'd':
         os.system('cls' if os.name == 'nt' else 'clear')
 
         top_10_sold_for_group()
 
-        input("Press Enter para continuar...")
+        input("Press Enter to continue...")
         return False, False
-    
+
     elif selected == 'e':
         os.system('cls' if os.name == 'nt' else 'clear')
 
-        #insira a função aqui
+        get_top_products_by_helpful()
 
-        input("Press Enter para continuar...")
+        input("Press Enter to continue...")
         return False, False
     elif selected == 'f':
         os.system('cls' if os.name == 'nt' else 'clear')
 
-        #insira a função aqui
+        get_top_categories_by_helpful()
 
-        input("Press Enter para continuar...")
+        input("Press Enter to continue...")
         return False, False
     elif selected == 'g':
         os.system('cls' if os.name == 'nt' else 'clear')
 
-        #insira a função aqui
+        get_top_commenters_for_groups()
 
-        input("Press Enter para continuar...")
+        input("Press Enter to continue...")
         return False, False
     elif selected == 'q':
         os.system('cls' if os.name == 'nt' else 'clear')
-        print('volte sempre! :D')
+        print('Goodbye! :D')
         return True, False
     else:
         return False, True
