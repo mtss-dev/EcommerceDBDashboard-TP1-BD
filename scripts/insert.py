@@ -34,8 +34,8 @@ def add_products(product_dicts):
         
         if product_rows:
             for i, row in enumerate(product_rows):
-                asin_product = row[0]
                 product_dict = product_dicts[i]
+                asin_product = product_dict['asin']
 
                 # insert similar products
                 if 'similar' in product_dict:

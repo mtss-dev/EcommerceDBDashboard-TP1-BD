@@ -50,7 +50,7 @@ def create_tables():
         """
         CREATE TABLE category_info (
             category_id int  NOT NULL PRIMARY KEY,
-            name varchar(50)  NOT NULL 
+            name varchar(100)  NOT NULL 
         )
         """,
         """
