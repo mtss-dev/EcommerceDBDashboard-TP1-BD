@@ -41,43 +41,42 @@ def options(selected):
             
             if check_product_exists(entry):
                 top_reviews(entry)
-                break
+                input("Press Enter para continuar...")
+                os.system('cls' if os.name == 'nt' else 'clear')
             else:
                 print("Produto não encontrado!")
-        input("Press Enter para continuar...")
-        return False, False
 
     elif selected == 'b':
         os.system('cls' if os.name == 'nt' else 'clear')
         while True:
             entry = input('Insira o ASIN de um produto (r para retornar): ')
+        
             
             if confirm_return(entry):
                 return False, False
             
-            if get_similar_product(entry):
-                top_reviews(entry)
-                break
+            if check_product_exists(entry):
+                get_similar_products(entry)
+                input("Press Enter para continuar...")
+                os.system('cls' if os.name == 'nt' else 'clear')
             else:
                 print("Produto não encontrado!")
-        input("Press Enter para continuar...")
-        return False, False
     
     elif selected == 'c':
         os.system('cls' if os.name == 'nt' else 'clear')
         while True:
             entry = input('Insira o ASIN de um produto (r para retornar): ')
-            
             if confirm_return(entry):
                 return False, False
+
+            n = int(input('Insira a quantidade de dias que deseja analisar: '))
             
-            if get_similar_product(entry):
-                top_reviews(entry)
-                break
+            if check_product_exists(entry):
+                get_avg_rating_by_day(entry,n)
+                input("Press Enter para continuar...")
+                os.system('cls' if os.name == 'nt' else 'clear')
             else:
                 print("Produto não encontrado!")
-        input("Press Enter para continuar...")
-        return False, False
     
     elif selected == 'd':
         os.system('cls' if os.name == 'nt' else 'clear')
