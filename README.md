@@ -4,6 +4,10 @@
 
 - Dados de entrada será o “Amazon product co-purchasing network metadata” que faz parte do Stanford Network Analysis Project (SNAP).
 
+## Nota
+
+Obtemos nota 8.25 neste trabalho (faltou o dicionário de dados na documentação).
+
 ## Sobre a documentação
 
 Na pasta [documentation](documentation/) conterá três arquivos:
